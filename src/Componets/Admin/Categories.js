@@ -29,7 +29,7 @@ const Categories = () => {
       description,
     };
     try {
-      fetch("http://localhost:4500/api/category/register", {
+      fetch("https://stark-springs-97568.herokuapp.com/api/category/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,12 +52,15 @@ const Categories = () => {
   };
 
   const deleteUserHandler = (id) => {
-    fetch(`http://localhost:4500/api/delete_category/${id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-    })
+    fetch(
+      `https://stark-springs-97568.herokuapp.com/api/delete_category/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      }
+    )
       .then((res) => res.text())
       .then((data) => {
         if (data) {
@@ -82,7 +85,7 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4500/api/categorys", {
+    fetch("https://stark-springs-97568.herokuapp.com/api/categorys", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },

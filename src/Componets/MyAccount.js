@@ -12,6 +12,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 
 import "slick-carousel/slick/slick-theme.css";
+import { useLocation } from "react-router";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -36,6 +37,7 @@ function SamplePrevArrow(props) {
 }
 
 const MyAccount = () => {
+  const location = useLocation();
   //for registration
   const [newUser, setNewUser] = useState({
     name: "",
@@ -59,10 +61,11 @@ const MyAccount = () => {
   const handleLoginValue = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
-  const registrationHandler = (e) => {
+  const { from } = location.state || { from: { pathname: "/" } };
+  const registrationHandler = async (e) => {
     e.preventDefault();
     const { name, email, newPassword, confirmPassword } = newUser;
+    console.log(name, email, newPassword, confirmPassword);
     if (!(name && email && newPassword && confirmPassword)) {
       return toast.error("Fill all field");
     }
@@ -76,24 +79,23 @@ const MyAccount = () => {
       password: newPassword,
       confirmPassword,
     };
-    try {
-      fetch("http://localhost:4500/api/user/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.success) {
-            toast.success(result.msg);
-            window.location.reload();
-          } else {
-            toast.error(result.msg);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
+
+    await fetch("https://stark-springs-97568.herokuapp.com/api/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(result.msg);
+          window.location.reload();
+        } else {
+          toast.error(result.msg);
+        }
+      });
   };
 
   const loginHandler = (e) => {
@@ -109,17 +111,21 @@ const MyAccount = () => {
     };
 
     try {
-      fetch("http://localhost:4500/api/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
+      fetch(
+        "https://stark-springs-97568.herokuapp.com/api/user/login",
+
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      )
         .then((response) => response.json())
         .then((result) => {
           if (result.success) {
             toast.success(result.msg);
             localStorage.setItem("userToken", result.token);
-            window.location.reload();
+            window.location.reload(from);
           } else {
             toast.error(result.msg);
           }
@@ -238,7 +244,7 @@ const MyAccount = () => {
                     <input
                       type="password"
                       id="password"
-                      name="password"
+                      name="newPassword"
                       onChange={handleRegistrationValue}
                       placeholder="Password"
                       class="w-full   border border-gray-300   text-gray-700 py-2 px-3 "

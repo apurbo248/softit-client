@@ -32,7 +32,7 @@ const Products = () => {
       categoryId,
     };
     try {
-      fetch("http://localhost:4500/api/product/register", {
+      fetch("https://stark-springs-97568.herokuapp.com/api/product/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,12 +55,15 @@ const Products = () => {
   };
 
   const deleteUserHandler = (id) => {
-    fetch(`http://localhost:4500/api/delete_product/${id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-    })
+    fetch(
+      `https://stark-springs-97568.herokuapp.com/api/delete_product/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      }
+    )
       .then((res) => res.text())
       .then((data) => {
         if (data) {
@@ -85,7 +88,7 @@ const Products = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4500/api/categorys", {
+    fetch("https://stark-springs-97568.herokuapp.com/api/categorys", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },
@@ -98,7 +101,7 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:4500/api/products", {
+    fetch("https://stark-springs-97568.herokuapp.com/api/products", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },

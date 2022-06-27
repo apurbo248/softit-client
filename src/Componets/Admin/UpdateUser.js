@@ -40,17 +40,20 @@ const UpdateUser = () => {
       email: email || user.email,
       password: password || user.password,
       avatar: image || user.avatar,
-      phone: phone || user.phone
+      phone: phone || user.phone,
     };
 
-    fetch(`http://localhost:4500/api/update_user_info/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://stark-springs-97568.herokuapp.com/api/update_user_info/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((response) => response.json())
       .then((success) => {
         if (success) {
@@ -64,7 +67,7 @@ const UpdateUser = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4500/api/user/${id}`, {
+    fetch(`https://stark-springs-97568.herokuapp.com/api/user/${id}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },

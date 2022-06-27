@@ -11,11 +11,14 @@ const Users = () => {
   const userEmail = user?.user?.email;
 
   const response = async () => {
-    await fetch(`http://localhost:4500/api/users?keyword=${keyword}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-    })
+    await fetch(
+      `https://stark-springs-97568.herokuapp.com/api/users?keyword=${keyword}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setUserList(data);
@@ -25,7 +28,7 @@ const Users = () => {
   };
 
   const deleteUserHandler = (id) => {
-    fetch(`http://localhost:4500/api/delete_user/${id}`, {
+    fetch(`https://stark-springs-97568.herokuapp.com/api/delete_user/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -63,14 +66,17 @@ const Users = () => {
 
     const modifiedRoles = { id, role };
 
-    fetch(`http://localhost:4500/api/update_user_info/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-      body: JSON.stringify(modifiedRoles),
-    })
+    fetch(
+      `https://stark-springs-97568.herokuapp.com/api/update_user_info/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify(modifiedRoles),
+      }
+    )
       .then((response) => response.json())
       .then((success) => {
         if (success) {
@@ -98,10 +104,14 @@ const Users = () => {
               onChange={(e) => setQuery(e.target.value)}
               type="text"
               placeholder="Name/Phone number"
-              
               className="p-2 border rounded-full"
             />
-            <button onClick={response} className="bg-green-500 text-white px-4 -ml-8 rounded-full py-2 font-medium">Filter</button>
+            <button
+              onClick={response}
+              className="bg-green-500 text-white px-4 -ml-8 rounded-full py-2 font-medium"
+            >
+              Filter
+            </button>
           </div>
         </div>
         <div className="overflow-auto   pt- md:mb-   md:mt-0 md:pt-0 md p-2">
@@ -176,7 +186,9 @@ const Users = () => {
                               }
                             >
                               {userEmail === user.email ? (
-                                <h3 className="border border-green-500">admin</h3>
+                                <h3 className="border border-green-500">
+                                  admin
+                                </h3>
                               ) : (
                                 <select
                                   className={

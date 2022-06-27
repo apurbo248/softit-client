@@ -20,7 +20,7 @@ const UpdateProduct = () => {
       categoryId: categoryId || productInfo.categoryId,
     };
 
-    fetch(`http://localhost:4500/api/res/${id}`, {
+    fetch(`https://stark-springs-97568.herokuapp.com/api/res/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -40,10 +40,8 @@ const UpdateProduct = () => {
       });
   };
 
- 
   useEffect(() => {
-   
-    fetch(`http://localhost:4500/api/product/${id}`, {
+    fetch(`https://stark-springs-97568.herokuapp.com/api/product/${id}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },
@@ -51,17 +49,16 @@ const UpdateProduct = () => {
       .then((res) => res.json())
       .then((data) => setProductInfo(data));
 
-        fetch("http://localhost:4500/api/categorys", {
-         headers: {
-           authorization: `Bearer ${localStorage.getItem("userToken")}`,
-         },
-       })
-         .then((res) => res.json())
-         .then((data) => {
-           setCategoryList(data);
-         });
+    fetch("https://stark-springs-97568.herokuapp.com/api/categorys", {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategoryList(data);
+      });
   }, []);
- 
 
   return (
     <div>

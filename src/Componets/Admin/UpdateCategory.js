@@ -5,31 +5,34 @@ import Swal from "sweetalert2";
 
 const UpdateCategory = () => {
   const { id } = useParams();
-  console.log(id)
+  console.log(id);
   const [category, setCategory] = useState({});
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const updateCategoryHandler = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     const data = {
       name: name || category.name,
       description: description || category.description,
     };
 
-    fetch(`http://localhost:4500/api/update_category_info/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://stark-springs-97568.herokuapp.com/api/update_category_info/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((response) => response.json())
       .then((success) => {
         if (success) {
           Swal.fire("", "user Status updated successfully", "success");
-        //  window.location.href = "/admin/categories";
+          //  window.location.href = "/admin/categories";
         }
       })
       .catch((error) => {
@@ -38,7 +41,7 @@ const UpdateCategory = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4500/api/category/${id}`, {
+    fetch(`https://stark-springs-97568.herokuapp.com/api/category/${id}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },
